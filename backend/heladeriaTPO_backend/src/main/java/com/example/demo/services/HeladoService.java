@@ -2,14 +2,17 @@ package com.example.demo.services;
 
 
 import com.example.demo.models.Helado;
+import com.example.demo.models.HeladoDTO;
 import com.example.demo.repository.HeladoRepository;
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -17,6 +20,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @Service
 public class HeladoService {
     private final HeladoRepository hr;
+    private final ModelMapper mm = new ModelMapper();
 
     @Autowired
     private HeladoService (HeladoRepository hr){this.hr = hr;}
@@ -30,12 +34,6 @@ public class HeladoService {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    public Helado getHelado(Integer id){
-        return hr.findById(id).orElseThrow(() -> new HttpClientErrorException(BAD_REQUEST, "Helado no encontrado"));
-    }
-
-    public ArrayList<Helado> getAll() {return (ArrayList<Helado>) hr.findAll();}
 
     public ResponseEntity deleteHelado(Integer id){
         try {
@@ -60,5 +58,18 @@ public class HeladoService {
         }
     }
 
+    public HeladoDTO getHelado(int id){
+        Helado h = hr.findById(id).orElseThrow(() -> new HttpClientErrorException(BAD_REQUEST, "Helado no encontrado"));
+        return mm.map(h, HeladoDTO.class);
+    }
+
+    public List<HeladoDTO> getAll(){
+        List<Helado> helados = hr.findAll();
+        List<HeladoDTO> heladodto = new ArrayList<HeladoDTO>();
+        for (Helado h : helados){
+            heladodto.add(mm.map(h,HeladoDTO.class));
+        }
+        return heladodto;
+    }
 
 }

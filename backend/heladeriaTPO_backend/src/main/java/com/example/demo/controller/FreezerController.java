@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.models.Freezer;
+import com.example.demo.models.FreezerDTO;
 import com.example.demo.services.FreezerService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,12 @@ public class FreezerController {
     }
 
     @GetMapping("/getFreezer")
-    public Freezer getFreezer(@PathVariable final @NotNull Integer id) {
+    public FreezerDTO getFreezer(@PathVariable final @NotNull Integer id) {
         return fs.getFreezer(id);
     }
 
     @GetMapping("/getAll")
-    public List<Freezer> getAll(){
+    public List<FreezerDTO> getAll(){
         return fs.getAll();
     }
 

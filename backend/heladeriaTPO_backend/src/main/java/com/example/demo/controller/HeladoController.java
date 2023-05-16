@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.models.Helado;
+import com.example.demo.models.HeladoDTO;
 import com.example.demo.services.HeladoService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,12 @@ public class HeladoController {
     }
 
     @GetMapping("/getHelado")
-    public Helado getHelado(@PathVariable final @NotNull Integer id) {
+    public HeladoDTO getHelado(@PathVariable final @NotNull Integer id) {
         return hs.getHelado(id);
     }
 
     @GetMapping("/getAll")
-    public List<Helado> getAll(){
+    public List<HeladoDTO> getAll(){
         return hs.getAll();
     }
 

@@ -1,23 +1,30 @@
 package com.example.demo.services;
 
 import com.example.demo.models.Freezer;
+import com.example.demo.models.FreezerDTO;
 import com.example.demo.repository.FreezerRepository;
+import com.example.demo.repository.HeladoRepository;
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
 @Service
 public class FreezerService {
     private final FreezerRepository fr;
+    private final HeladoRepository hr;
+    private final ModelMapper mm = new ModelMapper();
 
     @Autowired
-    public FreezerService(FreezerRepository fr){this.fr = fr;};
+    public FreezerService(FreezerRepository fr, HeladoRepository hr){this.fr = fr; this.hr = hr};
 
 
     public ResponseEntity addFreezer (Freezer freezer){
@@ -29,11 +36,6 @@ public class FreezerService {
         }
     }
 
-    public Freezer getFreezer(Integer id){
-        return fr.findById(id).orElseThrow(() -> new HttpClientErrorException(BAD_REQUEST, "Freezer no encontrado"));
-    }
-
-    public ArrayList<Freezer> getAll() {return (ArrayList<Freezer>) fr.findAll();}
 
     public ResponseEntity deleteFreezer(Integer id){
         try {
@@ -46,7 +48,7 @@ public class FreezerService {
 
     public ResponseEntity updateFreezer(@NotNull Integer id, Freezer freezer){
         try {
-            Freezer f = fr.findById(id).orElseThrow(() -> new HttpClientErrorException(BAD_REQUEST, "Freezer no encontrado"));
+            Freezer f = fr.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Freezer no encontrado"));
             f.setId(freezer.getId());
             f.setDescription(freezer.getDescription());
             f.setMarca(freezer.getMarca());
@@ -57,5 +59,22 @@ public class FreezerService {
          return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+
+    public FreezerDTO getFreezer(Integer id){
+        Freezer f = fr.findById(id).orElseThrow(() -> new HttpClientErrorException(BAD_REQUEST, "Freezer no encontrado"));
+        return  mm.map(f, FreezerDTO.class);
+    }
+
+    public List<FreezerDTO> getAll() {
+        List<Freezer> freezers = fr.findAll();
+        List<FreezerDTO> freezersdto = new ArrayList<FreezerDTO>();
+        for (Freezer f : freezers){
+            freezersdto.add(mm.map(f, FreezerDTO.class));
+        }
+        return freezersdto;
+    }
+
 
 }
