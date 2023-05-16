@@ -24,7 +24,7 @@ public class FreezerService {
     private final ModelMapper mm = new ModelMapper();
 
     @Autowired
-    public FreezerService(FreezerRepository fr, HeladoRepository hr){this.fr = fr; this.hr = hr};
+    public FreezerService(FreezerRepository fr, HeladoRepository hr){this.fr = fr; this.hr = hr;};
 
 
     public ResponseEntity addFreezer (Freezer freezer){
