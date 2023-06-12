@@ -1,0 +1,115 @@
+<br>
+<!-- Lista de Helados -->
+<h2 class="text-center text-uppercase" style="color: rgb(188, 137, 236); font-weight: bold;">Lista de Helados</h2>
+
+<table class="table table-striped table-bordered border-primary">
+    <thead class="thead bg-primary text-white">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Freezer</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let helado of heladoList">
+            <td>{{helado.id}}</td>
+            <td>{{helado.name}}</td>
+            <td>{{helado.category}}</td>
+            <td>{{helado.stock}}</td>
+            <!-- <td>{{helado.freezer.description}}</td> --> 
+            <td><button class="btn btn-primary btn-sm" (click)="view(ver,helado)">Ver</button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="delete(helado.id)">X</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+
+<!-- MODAL -->
+<ng-template #ver let-modal>
+    <div class="modal-header" style="background-color: brown;">
+        <h5 class="modal-title" style="color: burlywood;">Modificar Helado</h5>
+        <button (click)="modal.dismiss()">X</button>
+    </div>
+    <div class="modal-body">
+        <label>Id: </label>
+        <input class="form-control" [(ngModel)] = "InputIDV" readonly>
+        <label>Name: </label>
+        <input class="form-control" [(ngModel)] = "InputNameV">
+        <label>Category: </label>
+        <input class="form-control" [(ngModel)] = "InputCategoryV">
+        <label>Stock: </label>
+        <input class="form-control" [(ngModel)] = "InputStockV">
+        <label>Freezer</label>
+        <br>
+        <select [(ngModel)]="InputFreezerV">
+            <option *ngFor="let freezer of freezerList" [ngValue]="freezer">{{freezer.description}}</option>
+        </select>
+        
+    </div>
+    <div class="modal-footer" style="background-color: brown;">
+        <button class="btn btn-primary" (click)="modal.close()" style="align-self: center; margin-right: 40%;"> Guardar</button>
+    </div>
+</ng-template>
+
+<br>
+
+<!-- Agregar Helado -->
+
+<div class="card" style="background-color: rgb(162, 196, 224); padding: 20px; border-radius: 12px; margin: 20px;">
+    <h3 style="color: aliceblue;">Agregar Helado:</h3>
+    <br>
+    <form [formGroup]="heladoForm">
+        <tfoot>
+            <tr>
+                <td>
+                    <input formControlName="id" placeholder="ID">
+                    <p *ngIf="id.touched && id.errors && id.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <input formControlName="name" placeholder="NAME">
+                    <p *ngIf="name.touched && name.errors && name.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <input formControlName="category" placeholder="CATEGORY">
+                    <p *ngIf="category.touched && category.errors && category.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <input formControlName="stock" placeholder="STOCK">
+                    <p *ngIf="stock.touched && stock.errors && stock.errors['required']">Obligatorio</p>
+                </td>
+                <td> 
+                    <select name="freezer" formControlName="freezer">
+                        <option *ngFor="let freezer of freezerList" [ngValue]="freezer">{{freezer.description}}</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" style="margin-left: 5px;" class="btn btn-light" (click)='add()'>Agregar</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td><p>ID</p></td>
+                <td><p>Nombre</p></td>
+                <td><p>Categoria</p></td>
+                <td><p>Stock</p></td>
+                <td><p>Freezer</p></td>
+            </tr>
+            <br>
+            
+            <tr>
+                
+                <td>
+                    <button type="button" style="margin-left: 300%;" class="btn btn-light" (click)='add()'>Agregar</button>
+                </td>
+            </tr>
+
+        </tfoot>
+
+    </form>
+</div>

@@ -1,0 +1,88 @@
+<br>
+
+<h2 class="text-center text-uppercase" style="color: rgb(188, 137, 236); font-weight: bold;">Lista de Freezers</h2>
+
+<table class="table table-striped table-bordered border-primary">
+    <thead class="thead bg-primary text-white">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Description</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Temperatura</th>
+            <th scope="col">Helados</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let freezer of freezerList">
+            <td>{{freezer.id}}</td>
+            <td>{{freezer.description}}</td>
+            <td>{{freezer.marca}}</td>
+            <td>{{freezer.temperatura}}</td>
+            <td><button class="btn btn-primary btn-sm" (click)="view(ver,freezer)">Ver</button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="delete(freezer.id)">X</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+
+<!-- MODAL -->
+<ng-template #ver let-modal>
+    <div class="modal-header" style="background-color: brown;">
+        <h5 class="modal-title" style="color: burlywood;">Modificar Freezer</h5>
+        <button (click)="modal.dismiss()">X</button>
+    </div>
+    <div class="modal-body">
+        <label>Id: </label>
+        <input class="form-control" [(ngModel)] = "InputIDV" readonly>
+        <label>Description: </label>
+        <input class="form-control" [(ngModel)] = "InputDescriptionV">
+        <label>Marca: </label>
+        <input class="form-control" [(ngModel)] = "InputMarcaV">
+        <label>Temperatura: </label>
+        <input class="form-control" [(ngModel)] = "InputTemperaturaV">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="modal.close()"> Guardar</button>
+    </div>
+</ng-template>
+
+<br>
+
+
+<div class="card" style="background-color: rgb(162, 196, 224); padding: 20px; border-radius: 12px; margin: 20px;">
+    <h2 style="color: aliceblue;">Agregar Freezer:</h2>
+    <br>
+    <form [formGroup]="freezerForm">
+        <tfoot>
+            <tr>
+                <td>
+                    <input formControlName="id" placeholder="ID">
+                    <p *ngIf="id.touched && id.errors && id.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <input formControlName="descriptionFreezer" placeholder="DESCRIPTION">
+                    <p *ngIf="description.touched && description.errors && description.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <input formControlName="marca" placeholder="MARCA">
+                    <p *ngIf="marca.touched && marca.errors && marca.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <input formControlName="temperatura" placeholder="TEMPERATURA">
+                    <p *ngIf="temperatura.touched && temperatura.errors && temperatura.errors['required']">Obligatorio</p>
+                </td>
+                <td>
+                    <button type="button" style="margin-left: 5px;" class="btn btn-light" (click)='add()'>Agregar</button>
+                </td>
+            </tr>
+
+        </tfoot>
+
+    </form>
+</div>
+
+
