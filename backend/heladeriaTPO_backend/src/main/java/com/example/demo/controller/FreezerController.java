@@ -23,12 +23,12 @@ public class FreezerController {
 
     @PostMapping("/{id}/update")
     public ResponseEntity updateFreezer (@RequestBody final @NotNull Integer id, @RequestBody final @NotNull Freezer freezer){
-        return updateFreezer(id, freezer);
+        return fs.updateFreezer(id, freezer);
     }
 
     @PostMapping("/{id}/delete")
     public ResponseEntity deleteFreezer(@PathVariable final @NotNull Integer id){
-        return deleteFreezer(id);
+        return fs.deleteFreezer(id);
     }
 
     @GetMapping("/getFreezer")

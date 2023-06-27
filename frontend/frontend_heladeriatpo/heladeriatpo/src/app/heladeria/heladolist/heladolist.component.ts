@@ -17,8 +17,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class HeladolistComponent implements OnInit{
-  public heladoList: Helado[] = []
-  public freezerList: Freezer[]
+  heladoList = new Array<Helado>()
+  freezerList = new Array<Freezer>()
 
   helado = new Helado()
   heladoForm: FormGroup
@@ -26,7 +26,7 @@ export class HeladolistComponent implements OnInit{
   //View 
   public InputIDV: number
   public InputNameV: string
-  public InputCategoryV: string 
+  public InputCategoriaV: string 
   public InputStockV: number
   public InputFreezerV: Freezer
 
@@ -36,19 +36,20 @@ export class HeladolistComponent implements OnInit{
   ngOnInit(): void {
     this.helado.id= 0
     this.helado.name = ""
-    this.helado.category = ""
-    this.helado.stock = 0 
-    this.helado.freezer = new Freezer
+    this.helado.categoria = ""
+    this.helado.stock = 0  
+    this.helado.freezer = Freezer[0]
     this.heladoForm = new FormGroup({
       'id': new FormControl(this.helado.id, Validators.required),
       'name': new FormControl(this.helado.name, Validators.required),
-      'category': new FormControl(this.helado.category, Validators.required),
+      'categoria': new FormControl(this.helado.categoria, Validators.required),
       'stock': new FormControl(this.helado.stock, Validators.required),
       'freezer': new FormControl(this.helado.freezer, Validators.required)
     })
   
     
     this.freezerService.getAll().subscribe(freezerResponse =>{
+      
       this.freezerList = freezerResponse
       console.log(freezerResponse)
     }, error => {
@@ -56,6 +57,7 @@ export class HeladolistComponent implements OnInit{
     })
 
     this.heladoService.getAll().subscribe(heladoResponse => {
+      
       this.heladoList = heladoResponse
       console.log(heladoResponse)
     }, error =>{
@@ -65,7 +67,7 @@ export class HeladolistComponent implements OnInit{
 
     get id(){return this.heladoForm.get('id')} 
     get name(){return this.heladoForm.get('name')}
-    get category(){return this.heladoForm.get('category')}
+    get categoria(){return this.heladoForm.get('categoria')}
     get stock(){return this.heladoForm.get('stock')}
     get freezer(){return this.heladoForm.get('freezer')}
 
@@ -73,8 +75,10 @@ export class HeladolistComponent implements OnInit{
       let helado = new Helado()
       helado.id = this.id.value  
       helado.name = this.name.value
-      helado.category = this.category.value
+      helado.categoria = this.categoria.value
       helado.stock = this.stock.value
+      helado.freezer = this.freezer.value
+      alert(helado.freezer.description)
       console.log(helado);
     
     this.heladoService.add(helado).subscribe(() => {
@@ -104,14 +108,14 @@ export class HeladolistComponent implements OnInit{
   view(ver: any, h: Helado){
     this.InputIDV = h.id
     this.InputNameV = h.name
-    this.InputCategoryV = h.category
+    this.InputCategoriaV = h.categoria
     this.InputStockV = h.stock
-    this.InputFreezerV = h.freezer
+    this.InputFreezerV = this.freezerList[0]
     this.modalService.open(ver).result.then(() => {
       let helado = new Helado()
       helado.id = this.InputIDV
       helado.name = this.InputNameV
-      helado.category = this.InputCategoryV
+      helado.categoria = this.InputCategoriaV
       helado.stock = this.InputStockV
       helado.freezer = this.InputFreezerV
       alert(this.InputIDV)
@@ -124,12 +128,5 @@ export class HeladolistComponent implements OnInit{
     })
 
   }
-
-
-
-
-
-
-
 }
 

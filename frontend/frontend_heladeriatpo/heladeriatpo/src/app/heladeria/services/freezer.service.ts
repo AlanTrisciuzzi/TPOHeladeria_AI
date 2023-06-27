@@ -10,11 +10,11 @@ import { Freezer } from '../models/freezer';
 })
 
 export class FreezerService {
-    private url = 'http://localhost:8080/heladeria'
+    private url = 'http://localhost:8080/freezer'
     constructor(private http: HttpClient){}
 
     getAll() : Observable <any> {
-        return this.http.get(this.url)
+        return this.http.get(this.url + "/getAll")
     }
 
     delete(id : number) : Observable <any> {

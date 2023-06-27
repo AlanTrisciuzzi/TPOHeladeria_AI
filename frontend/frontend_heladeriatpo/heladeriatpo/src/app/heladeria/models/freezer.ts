@@ -5,6 +5,5 @@ export class Freezer {
     description: string
     marca: string
     temperatura: number
-    helado: Helado
-
+    helado: Array<Helado>
 }

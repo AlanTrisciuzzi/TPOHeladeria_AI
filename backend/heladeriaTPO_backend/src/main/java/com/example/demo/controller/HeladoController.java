@@ -24,12 +24,12 @@ public class HeladoController {
 
     @PostMapping("/{id}/update")
     public ResponseEntity updateHelado (@RequestBody final @NotNull Integer id, @RequestBody final @NotNull Helado helado){
-        return updateHelado(id, helado);
+        return hs.updateHelado(id, helado);
     }
 
     @PostMapping("/{id}/delete")
     public ResponseEntity deleteHelado(@PathVariable final @NotNull Integer id){
-        return deleteHelado(id);
+        return hs.deleteHelado(id);
     }
 
     @GetMapping("/getHelado")

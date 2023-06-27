@@ -7,7 +7,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Category</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Stock</th>
             <th scope="col">Freezer</th>
             <th scope="col">Editar</th>
@@ -18,9 +18,9 @@
         <tr *ngFor="let helado of heladoList">
             <td>{{helado.id}}</td>
             <td>{{helado.name}}</td>
-            <td>{{helado.category}}</td>
+            <td>{{helado.categoria}}</td>
             <td>{{helado.stock}}</td>
-            <!-- <td>{{helado.freezer.description}}</td> --> 
+            <td>{{helado.freezer}}</td> 
             <td><button class="btn btn-primary btn-sm" (click)="view(ver,helado)">Ver</button></td>
             <td><button class="btn btn-danger btn-sm" (click)="delete(helado.id)">X</button></td>
         </tr>
@@ -41,8 +41,8 @@
         <input class="form-control" [(ngModel)] = "InputIDV" readonly>
         <label>Name: </label>
         <input class="form-control" [(ngModel)] = "InputNameV">
-        <label>Category: </label>
-        <input class="form-control" [(ngModel)] = "InputCategoryV">
+        <label>Categoria: </label>
+        <input class="form-control" [(ngModel)] = "InputCategoriaV">
         <label>Stock: </label>
         <input class="form-control" [(ngModel)] = "InputStockV">
         <label>Freezer</label>
@@ -51,6 +51,8 @@
             <option *ngFor="let freezer of freezerList" [ngValue]="freezer">{{freezer.description}}</option>
         </select>
         
+        
+
     </div>
     <div class="modal-footer" style="background-color: brown;">
         <button class="btn btn-primary" (click)="modal.close()" style="align-self: center; margin-right: 40%;"> Guardar</button>
@@ -76,15 +78,15 @@
                     <p *ngIf="name.touched && name.errors && name.errors['required']">Obligatorio</p>
                 </td>
                 <td>
-                    <input formControlName="category" placeholder="CATEGORY">
-                    <p *ngIf="category.touched && category.errors && category.errors['required']">Obligatorio</p>
+                    <input formControlName="categoria" placeholder="CATEGORIA">
+                    <p *ngIf="categoria.touched && categoria.errors && categoria.errors['required']">Obligatorio</p>
                 </td>
                 <td>
                     <input formControlName="stock" placeholder="STOCK">
                     <p *ngIf="stock.touched && stock.errors && stock.errors['required']">Obligatorio</p>
                 </td>
                 <td> 
-                    <select name="freezer" formControlName="freezer">
+                    <select formControlName="freezer">
                         <option *ngFor="let freezer of freezerList" [ngValue]="freezer">{{freezer.description}}</option>
                     </select>
                 </td>
@@ -92,7 +94,6 @@
                     <button type="button" style="margin-left: 5px;" class="btn btn-light" (click)='add()'>Agregar</button>
                 </td>
             </tr>
-
             <tr>
                 <td><p>ID</p></td>
                 <td><p>Nombre</p></td>
@@ -101,14 +102,6 @@
                 <td><p>Freezer</p></td>
             </tr>
             <br>
-            
-            <tr>
-                
-                <td>
-                    <button type="button" style="margin-left: 300%;" class="btn btn-light" (click)='add()'>Agregar</button>
-                </td>
-            </tr>
-
         </tfoot>
 
     </form>

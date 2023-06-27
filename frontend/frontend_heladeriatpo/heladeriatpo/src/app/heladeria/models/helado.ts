@@ -3,7 +3,7 @@ import { Freezer } from "./freezer"
 export class Helado {
     id: number
     name: string
-    category: string
+    categoria: string
     stock: number
-    freezer: Array<Freezer>
+    freezer: Freezer
 }

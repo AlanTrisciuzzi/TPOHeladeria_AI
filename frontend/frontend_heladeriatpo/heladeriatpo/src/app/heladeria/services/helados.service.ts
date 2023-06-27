@@ -9,11 +9,11 @@ import { Helado } from "../models/helado";
 
 
 export class HeladoService{
-    private url = 'http://localhost:8080/heladeria'
+    private url = 'http://localhost:8080/helado'
     constructor(private http: HttpClient){}
 
     getAll() : Observable <any> {
-        return this.http.get(this.url )
+        return this.http.get(this.url + "/getAll")
     }
 
     delete(id: number) : Observable <any>{
@@ -21,10 +21,11 @@ export class HeladoService{
     }
 
     add(helado: Helado) : Observable <any>{
-        return this.http.post(this.url,Helado)
+        alert(helado.categoria)
+        return this.http.post(this.url + "/addHelado", helado)
     }
 
-    edit(helado: Helado, id : number) : Observable <any>{
+    edit(id : number, helado: Helado) : Observable <any>{
         return this.http.post(this.url + '/' + helado.id + '/update', helado)
     }
 

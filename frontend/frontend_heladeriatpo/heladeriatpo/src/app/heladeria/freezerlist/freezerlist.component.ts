@@ -14,7 +14,7 @@ import { FreezerService } from '../services/freezer.service';
   styleUrls: ['./freezerlist.component.css']
 })
 export class FreezerlistComponent implements OnInit {
-  public freezerList: Freezer[] = []
+  freezerList = new Array<Freezer>()
   freezer = new Freezer()
   freezerForm: FormGroup
 
@@ -24,7 +24,7 @@ export class FreezerlistComponent implements OnInit {
   public InputDescriptionV: string
   public InputMarcaV: string
   public InputTemperaturaV: number
-  public InputListV: Helado[] = []
+  public InputListV = new Array<Helado>()
   
 
   constructor (private freezerService: FreezerService, private modalService: NgbModal){}
@@ -34,13 +34,13 @@ export class FreezerlistComponent implements OnInit {
     this.freezer.description = ""
     this.freezer.marca = ""
 	  this.freezer.temperatura = 0
-    this.freezer.helado = []
+    this.freezer.helado = Helado[0]
     this.freezerForm = new FormGroup({
       'id': new FormControl(this.freezer.id, Validators.required),
       'description': new FormControl(this.freezer.description, Validators.required),
       'marca': new FormControl(this.freezer.marca, Validators.required),
-      'helado': new FormControl(this.freezer.helado, Validators.required),
-      'temperatura': new FormControl(this.freezer.temperatura, Validators.required)
+      'temperatura': new FormControl(this.freezer.temperatura, Validators.required),
+      'helado': new FormControl(this.freezer.helado, Validators.required)
     })
 
     this.freezerService.getAll().subscribe(freezerResponse => {
@@ -78,7 +78,6 @@ view(ver: any, f: Freezer){
   this.InputMarcaV = f.marca
   this.InputTemperaturaV = f.temperatura
   this.InputListV = f.helado
-  
   this.modalService.open(ver).result.then(() => {
     let freezer = new Freezer()
     freezer.id = this.InputIDV
@@ -86,10 +85,9 @@ view(ver: any, f: Freezer){
     freezer.marca = this.InputMarcaV
     freezer.temperatura = this.InputTemperaturaV
     freezer.helado = this.InputListV
-    
     alert(this.InputIDV)
   
-    this.freezerService.edit(this.InputIDV, freezer).subscribe(() => {
+    this.freezerService.edit( freezer, this.InputIDV).subscribe(() => {
       location.reload()
 
     }, error => {
