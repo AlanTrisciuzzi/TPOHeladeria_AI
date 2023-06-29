@@ -49,7 +49,7 @@ export class HeladolistComponent implements OnInit{
   
     
     this.freezerService.getAll().subscribe(freezerResponse =>{
-      
+      alert("LISTO")
       this.freezerList = freezerResponse
       console.log(freezerResponse)
     }, error => {
@@ -104,6 +104,8 @@ export class HeladolistComponent implements OnInit{
       }
     })
   }
+  
+
   
   view(ver: any, h: Helado){
     this.InputIDV = h.id

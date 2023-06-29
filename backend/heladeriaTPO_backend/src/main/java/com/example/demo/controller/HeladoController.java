@@ -23,7 +23,7 @@ public class HeladoController {
     }
 
     @PostMapping("/{id}/update")
-    public ResponseEntity updateHelado (@RequestBody final @NotNull Integer id, @RequestBody final @NotNull Helado helado){
+    public ResponseEntity updateHelado (@PathVariable final @NotNull Integer id, @RequestBody final @NotNull Helado helado){
         return hs.updateHelado(id, helado);
     }
 

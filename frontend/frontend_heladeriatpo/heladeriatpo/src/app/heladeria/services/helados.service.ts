@@ -20,12 +20,11 @@ export class HeladoService{
         return this.http.post(this.url + "/" + id + "/delete", null )
     }
 
-    add(helado: Helado) : Observable <any>{
-        alert(helado.categoria)
+    add(helado: Helado) : Observable <any>{    
         return this.http.post(this.url + "/addHelado", helado)
     }
 
-    edit(id : number, helado: Helado) : Observable <any>{
+    edit(id: number, helado: Helado) : Observable <any>{
         return this.http.post(this.url + '/' + helado.id + '/update', helado)
     }
 

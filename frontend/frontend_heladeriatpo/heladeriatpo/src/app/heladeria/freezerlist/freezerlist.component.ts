@@ -87,7 +87,7 @@ view(ver: any, f: Freezer){
     freezer.helado = this.InputListV
     alert(this.InputIDV)
   
-    this.freezerService.edit( freezer, this.InputIDV).subscribe(() => {
+    this.freezerService.edit(this.InputIDV, freezer).subscribe(() => {
       location.reload()
 
     }, error => {

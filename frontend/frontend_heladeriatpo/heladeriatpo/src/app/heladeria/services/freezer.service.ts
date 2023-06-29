@@ -22,10 +22,10 @@ export class FreezerService {
     }
 
     add(freezer: Freezer) : Observable <any> {
-        return this.http.post(this.url, freezer)
+        return this.http.post(this.url + "/addFreezer", freezer )
     }
 
-    edit(freezer: Freezer, id : number) : Observable <any> {
+    edit(id : number, freezer: Freezer) : Observable <any> {
         return this.http.post(this.url + '/' + freezer.id + '/update', freezer)
     }
 

@@ -23,7 +23,7 @@ public class Helado {
     private Integer stock;
 
     @ManyToOne
-    @JsonIgnore
+
     @JoinColumn(name = "freezer_id")
     private Freezer freezer;
 

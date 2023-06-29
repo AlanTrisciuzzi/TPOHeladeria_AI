@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class Freezer {
     private String marca;
     private Integer temperatura;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "freezer")
     private List<Helado> heladoList;
 

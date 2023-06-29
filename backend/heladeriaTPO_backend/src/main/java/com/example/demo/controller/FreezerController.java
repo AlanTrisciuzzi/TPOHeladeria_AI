@@ -22,7 +22,7 @@ public class FreezerController {
     }
 
     @PostMapping("/{id}/update")
-    public ResponseEntity updateFreezer (@RequestBody final @NotNull Integer id, @RequestBody final @NotNull Freezer freezer){
+    public ResponseEntity updateFreezer (@PathVariable final @NotNull Integer id, @RequestBody final @NotNull Freezer freezer){
         return fs.updateFreezer(id, freezer);
     }
 
