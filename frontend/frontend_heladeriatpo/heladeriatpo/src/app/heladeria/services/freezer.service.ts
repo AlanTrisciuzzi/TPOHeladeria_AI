@@ -18,7 +18,7 @@ export class FreezerService {
     }
 
     delete(id : number) : Observable <any> {
-        return this.http.delete(this.url + "/" + id + "/delete")
+        return this.http.post(this.url + "/" + id + "/delete", null)
     }
 
     add(freezer: Freezer) : Observable <any> {

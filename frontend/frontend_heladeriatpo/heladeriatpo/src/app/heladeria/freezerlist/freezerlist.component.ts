@@ -34,7 +34,7 @@ export class FreezerlistComponent implements OnInit {
     this.freezer.description = ""
     this.freezer.marca = ""
 	  this.freezer.temperatura = 0
-    this.freezer.helado = Helado[0]
+    this.freezer.helado = []
     this.freezerForm = new FormGroup({
       'id': new FormControl(this.freezer.id, Validators.required),
       'description': new FormControl(this.freezer.description, Validators.required),
@@ -71,51 +71,48 @@ export class FreezerlistComponent implements OnInit {
     
   }
 
-view(ver: any, f: Freezer){
+  view(ver: any, f: Freezer){
   
-  this.InputIDV = f.id
-  this.InputDescriptionV = f.description
-  this.InputMarcaV = f.marca
-  this.InputTemperaturaV = f.temperatura
-  this.InputListV = f.helado
-  this.modalService.open(ver).result.then(() => {
-    let freezer = new Freezer()
-    freezer.id = this.InputIDV
-    freezer.description = this.InputDescriptionV
-    freezer.marca = this.InputMarcaV
-    freezer.temperatura = this.InputTemperaturaV
-    freezer.helado = this.InputListV
-    alert(this.InputIDV)
-  
-    this.freezerService.edit(this.InputIDV, freezer).subscribe(() => {
-      location.reload()
+    this.InputIDV = f.id
+    this.InputDescriptionV = f.description
+    this.InputMarcaV = f.marca
+    this.InputTemperaturaV = f.temperatura
+    this.InputListV = f.helado
+    this.modalService.open(ver).result.then(() => {
+      let freezer = new Freezer()
+      freezer.id = this.InputIDV
+      freezer.description = this.InputDescriptionV
+      freezer.marca = this.InputMarcaV
+      freezer.temperatura = this.InputTemperaturaV
+      freezer.helado = this.InputListV
 
+      this.freezerService.edit(this.InputIDV, freezer).subscribe(() => {
+        location.reload()
+      }, error => {
+        console.error(error)
+        alert('Error ' + error.error.messege)
+      })  
+    })  
+  }
+
+
+  add(){
+    let freezer = new Freezer()
+    freezer.id = this.id.value
+    freezer.description = this.description.value
+    freezer.marca = this.marca.value
+    freezer.temperatura = this.temperatura.value
+    freezer.helado = this.helado.value
+
+    this.freezerService.add(freezer).subscribe(() => {
+      alert('Alta Exitosa')
+      document.getElementsByTagName("input")[0].focus()
+      location.reload()
     }, error => {
       console.error(error)
-      alert('Error ' + error.error.messege)
-    })  
-  })  
-}
-
-
-add(){
-  let freezer = new Freezer()
-
-  freezer.id = this.id.value
-  freezer.description = this.description.value
-  freezer.marca = this.marca.value
-  freezer.temperatura = this.temperatura.value
-  freezer.helado = this.helado.value
-
-  this.freezerService.add(freezer).subscribe(() => {
-    alert('Alta Exitosa')
-    document.getElementsByTagName("input")[0].focus()
-    location.reload()
-  }, error => {
-    console.error(error)
-    alert('Error: ' + error.error.messege)
-    document.getElementsByTagName("input")[0].focus()
-  })
-}
+      alert('Error: ' + error.error.messege)
+      document.getElementsByTagName("input")[0].focus()
+    })
+  }
 
 }
